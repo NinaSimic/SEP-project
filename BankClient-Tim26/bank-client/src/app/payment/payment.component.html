@@ -1,0 +1,87 @@
+<div class="container">
+  <form class="form-horizontal" role="form" (ngSubmit)="onSubmit()" #transactionForm="ngForm">
+    <fieldset>
+      <legend>Plaćanje</legend>
+      <div [hidden]="!transactionNotification">
+        <div [hidden]="!successfulTransaction" class="alert alert-info" role="alert" style="width: 20%">
+            <strong>Uspesna transakcija!</strong> 
+        </div>
+        <div [hidden]="successfulTransaction" class="alert alert-danger" role="alert" style="width: 20%">
+            <strong>Neuspesna transakcija!</strong> 
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label"  for="card-holder-name">Vlasnik kartice</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="holder" [(ngModel)] = "transaction.holder" 
+          required="required" pattern="[a-zA-Z]+\s[a-zA-Z]+" #holder="ngModel" name="card-holder-name" id="card-holder-name" placeholder="Ime vlasnika kartice">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="card-number">Broj kartice</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" 
+          [(ngModel)] = "transaction.pan" name="card-number" 
+          pattern="[0-9-]+" required="required"
+          #pan="ngModel"
+          id="card-number" placeholder="Broj kartice (debitna/kreditna)">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="expiry-month">Rok važenja</label>
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col-xs-3">
+              <select required="true" class="form-control col-sm-2" name="expiry-month" id="expiry-month" [(ngModel)] = "expiryMonth"> 
+                <option>Mesec</option>
+                <option value="01">Jan (01)</option>
+                <option value="02">Feb (02)</option>
+                <option value="03">Mar (03)</option>
+                <option value="04">Apr (04)</option>
+                <option value="05">Maj (05)</option>
+                <option value="06">Jun (06)</option>
+                <option value="07">Jul (07)</option>
+                <option value="08">Avg (08)</option>
+                <option value="09">Sep (09)</option>
+                <option value="10">Okt (10)</option>
+                <option value="11">Nov (11)</option>
+                <option value="12">Dec (12)</option>
+              </select>
+            </div>
+            <div class="col-xs-3">
+              <select required="true" class="form-control" name="expiry-year" [(ngModel)] = "expiryYear">
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="cvv">Sigurnosni broj</label>
+        <div class="col-sm-3">
+          <input type="text" pattern  ="[0-9]{3}" #sigurnosniBroj="ngModel"  minlength="1" 
+          maxlength="3" class="form-control" [(ngModel)] = "transaction.securityCode" 
+          name="cvv" id="cvv" placeholder="Sigurnosni broj na poleđini kartice"
+          required="required">
+      </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <button (click)="postTransaction()" type="button"
+          [disabled]="!transactionForm.form.valid"
+          class="btn btn-success">Plati</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
