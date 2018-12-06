@@ -1,5 +1,5 @@
 package com.concentrator.model;
 
 public enum PaymentStatus {
-	PAID, IN_PROCESS, DECLINED
+	PAID, UNAUTHORIZED, DECLINED, ERROR, TYPE_UNAVAILABLE
 }

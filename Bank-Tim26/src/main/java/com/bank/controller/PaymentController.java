@@ -1,5 +1,7 @@
 package com.bank.controller;
 
+import java.io.IOException;
+
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,7 +18,7 @@ import com.bank.model.Transaction;
 import com.bank.service.impl.PaymentServiceImpl;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping("/api/payment")
 public class PaymentController {
 	
@@ -26,7 +28,7 @@ public class PaymentController {
 	
 	@PostMapping("/generate")
 	@ResponseBody
-	public String generatePaymentLink(@RequestBody PaymentRequest paymentRequest){
+	public String generatePaymentLink(@RequestBody PaymentRequest paymentRequest) throws IOException{
 		String ret = paymentServiceImpl.acquirerCheckRequest(paymentRequest);
 		return ret;
 	}

@@ -19,6 +19,9 @@ public class Merchant implements Serializable{
 	private Long id;
 	
 	@Column(nullable = false)
+	private String name;
+	
+	@Column(nullable = false)
 	@Size(max = 30)
 	private String merchantId;
 	
@@ -40,7 +43,7 @@ public class Merchant implements Serializable{
 	
 	@Column
 	private String errorUrl;
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -103,6 +106,14 @@ public class Merchant implements Serializable{
 
 	public void setErrorUrl(String errorUrl) {
 		this.errorUrl = errorUrl;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

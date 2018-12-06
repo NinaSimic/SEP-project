@@ -7,7 +7,7 @@ public class Transaction {
 	private Long id;
 	
 	protected String pan;
-	protected String securityCode;
+	protected char[] securityCode;
 	protected String holder;
 	protected Date validityDate;
 	protected String amount;
@@ -19,7 +19,7 @@ public class Transaction {
 		
 	}
 	
-	public Transaction(String pan, String securityCode, String holder, Date validityDate, String amount,
+	public Transaction(String pan, char[] securityCode, String holder, Date validityDate, String amount,
 			String acquirerOrderId, String acquirerTimestamp, String acquirerSwiftCode) {
 		super();
 		this.pan = pan;
@@ -72,11 +72,11 @@ public class Transaction {
 		this.acquirerTimestamp = acquirerTimestamp;
 	}
 
-	public String getSecurityCode() {
+	public char[] getSecurityCode() {
 		return securityCode;
 	}
 
-	public void setSecurityCode(String securityCode) {
+	public void setSecurityCode(char[] securityCode) {
 		this.securityCode = securityCode;
 	}
 

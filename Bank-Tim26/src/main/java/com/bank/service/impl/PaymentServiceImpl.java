@@ -1,5 +1,9 @@
 package com.bank.service.impl;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.Random;
 
@@ -26,6 +30,7 @@ import com.bank.repository.TransactionRepository;
 import com.bank.repository.InterBankTransactionRepository;
 import com.bank.repository.PaymentRequestRepository;
 import com.bank.service.PaymentService;
+import com.bank.utils.PasswordUtil;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -58,14 +63,15 @@ public class PaymentServiceImpl implements PaymentService {
 	private IINRepository iinRepository;
 	
 	@Override
-	public String acquirerCheckRequest(PaymentRequest paymentRequest) {
-		Merchant merchant = merchantRepository.findMerchantByMerchantId(paymentRequest.getMerchantId());
-		if (merchant.getMerchantPassword().equals(paymentRequest.getMerchantPassword())) {
+	public String acquirerCheckRequest(PaymentRequest paymentRequest) throws IOException {
+		System.out.println("usao");
+		if (!checkMerchantData(paymentRequest.getMerchantId(), paymentRequest.getMerchantPassword()).equals("")) {
 			String url = generatePaymentRequestUrl(paymentRequest.getMerchantId(),paymentRequest.getMerchantOrderId());
 			
 			paymentRequest.setPaymentLink(url);
 			paymentRequest.setActive(true);
 			paymentRequestRepository.save(paymentRequest);
+			Runtime.getRuntime().exec(new String[]{"cmd", "/c","start vivaldi.exe "+ url});
 			return url;
 		} else {
 			return "";
@@ -87,7 +93,7 @@ public class PaymentServiceImpl implements PaymentService {
         	builder.append(characters.charAt(index));
         }
         
-        String ret = "http://localhost:4200/payment/" + builder.toString() + "/" + merchantId + "/" + merchantOrderId;
+        String ret = "https://localhost:4200/payment/" + builder.toString() + "/" + merchantId + "/" + merchantOrderId;
 		
 		return ret;
 	}
@@ -110,7 +116,11 @@ public class PaymentServiceImpl implements PaymentService {
 			if (card==null) {
 				return null;
 			}
-			if (!(card.getHolder().equals(transaction.getHolder()) && card.getSecurityCode().equals(transaction.getSecurityCode()) && card.getValidityDate().toString().substring(0, 7).equals(transaction.getValidityDate()))) {
+			if(!PasswordUtil.verify(card.getSecurityCode(), transaction.getSecurityCode(), Charset.forName("UTF-8"))) {
+				return  null;
+			}
+			
+			if (!(card.getHolder().equals(transaction.getHolder()) && card.getValidityDate().toString().substring(0, 7).equals(transaction.getValidityDate()))) {
 				return null;
 			}
 			return intraBankTransaction(transaction);
@@ -173,5 +183,21 @@ public class PaymentServiceImpl implements PaymentService {
 		paymentRequest.setActive(false);
 		paymentRequestRepository.save(paymentRequest);
 	}
-
+	
+	@Override
+	public String checkMerchantData(String merchantId, String merchantPassword) {
+		Merchant merchant = merchantRepository.findMerchantByMerchantId(merchantId);
+		if (merchant == null) {
+			return "Authentication failed";
+		}
+		String verifyHash = merchant.getMerchantPassword();
+		String verifyPass = merchantPassword;
+		
+		if(!PasswordUtil.verify(verifyHash, verifyPass.toCharArray(), Charset.forName("UTF-8"))) {
+			return  "Authentication failed";
+		}
+		
+		return "";
+	}
+	
 }

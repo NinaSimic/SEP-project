@@ -12,7 +12,7 @@ public class TransactionResult extends Transaction {
 		
 	}
 	
-	public TransactionResult(String pan, String securityCode, String ownerName, Date validityDate,
+	public TransactionResult(String pan, char[] securityCode, String ownerName, Date validityDate,
 			String amount, String acquirerOrderId, String acquirerTimestamp, String acquirerSwiftCode,String issuerOrderId, String issuerTimestamp, boolean result) {
 		super(pan, securityCode, ownerName, validityDate, amount, acquirerOrderId, acquirerTimestamp, acquirerSwiftCode);
 		this.issuerOrderId = issuerOrderId;

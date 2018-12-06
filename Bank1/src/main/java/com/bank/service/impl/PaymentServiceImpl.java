@@ -87,7 +87,7 @@ public class PaymentServiceImpl implements PaymentService {
         	builder.append(characters.charAt(index));
         }
         
-        String ret = "http://localhost:4200/payment/" + builder.toString() + "/" + merchantId + "/" + merchantOrderId;
+        String ret = "https://localhost:4200/payment/" + builder.toString() + "/" + merchantId + "/" + merchantOrderId;
 		
 		return ret;
 	}

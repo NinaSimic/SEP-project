@@ -3,19 +3,45 @@ package com.concentrator.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
 public class PaymentRequest implements Serializable{
 
 	private static final long serialVersionUID = -2184014031936616233L;
 
-
-	private String merchantOrderId;
+	@Id
+	@GeneratedValue
+	private Long id;
+	
+	@Column
 	private String merchantId;
+	
+	@Column
 	private String merchantPassword;
+	
+	@Column
+	private String merchantOrderId;
+	
+	@Column
 	private double amount;
+	
+	@Column
 	private Date merchantTimestamp;
-	private PaymentStatus status;
+	
+	@Enumerated(EnumType.STRING)
 	private PaymentType type;
+	
+	@Enumerated(EnumType.STRING)
+	private PaymentStatus status;
+	
+	
+	private String url;
 	
 	public PaymentRequest() {
 	}
@@ -60,6 +86,14 @@ public class PaymentRequest implements Serializable{
 		this.merchantTimestamp = merchantTimestamp;
 	}
 
+	public PaymentType getType() {
+		return type;
+	}
+
+	public void setType(PaymentType type) {
+		this.type = type;
+	}
+
 	public PaymentStatus getStatus() {
 		return status;
 	}
@@ -68,13 +102,12 @@ public class PaymentRequest implements Serializable{
 		this.status = status;
 	}
 
-	public PaymentType getType() {
-		return type;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setType(PaymentType type) {
-		this.type = type;
+	public void setUrl(String url) {
+		this.url = url;
 	}
-	
 	
 }

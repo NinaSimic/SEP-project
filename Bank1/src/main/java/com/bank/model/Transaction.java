@@ -24,7 +24,7 @@ public class Transaction implements Serializable {
 	@Column
 	protected String pan;
 	@Column
-	protected String securityCode;
+	protected char[] securityCode;
 	@Column
 	protected String holder;
 	@Column
@@ -40,7 +40,7 @@ public class Transaction implements Serializable {
 		
 	}
 	
-	public Transaction(String pan, String securityCode, String holder, String validityDate, String amount, Long paymentId, PaymentStatus paymentStatus) {
+	public Transaction(String pan, char[] securityCode, String holder, String validityDate, String amount, Long paymentId, PaymentStatus paymentStatus) {
 		super();
 		this.pan = pan;
 		this.securityCode = securityCode;
@@ -53,11 +53,11 @@ public class Transaction implements Serializable {
 
 	
 	
-	public String getSecurityCode() {
+	public char[] getSecurityCode() {
 		return securityCode;
 	}
 
-	public void setSecurityCode(String securityCode) {
+	public void setSecurityCode(char[] securityCode) {
 		this.securityCode = securityCode;
 	}
 

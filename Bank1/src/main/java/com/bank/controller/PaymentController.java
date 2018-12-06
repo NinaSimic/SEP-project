@@ -18,7 +18,7 @@ import com.bank.model.Transaction;
 import com.bank.service.impl.PaymentServiceImpl;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping("/api/payment")
 public class PaymentController {
 	

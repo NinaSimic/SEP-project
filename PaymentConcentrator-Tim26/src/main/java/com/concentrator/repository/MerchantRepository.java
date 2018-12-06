@@ -9,4 +9,6 @@ import com.concentrator.model.Merchant;
 public interface MerchantRepository extends JpaRepository<Merchant, Long>{
 	
 	public Merchant findMerchantByMerchantIdAndMerchantPassword(String merchantId, String merchantPassword);
+	public Merchant findMerchantByMerchantId(String merchantId);
+	
 }

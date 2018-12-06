@@ -21,7 +21,7 @@ public class InterBankTransaction extends Transaction {
 		
 	}
 	
-	public InterBankTransaction(String pan, String securityCode, String holder, String validityDate,
+	public InterBankTransaction(String pan, char[] securityCode, String holder, String validityDate,
 			String amount, String acquirerOrderId, String acquirerTimestamp, String issuerOrderId, String issuerTimestamp, PaymentStatus paymentStatus, Long paymentId) {
 		super(pan, securityCode, holder, validityDate, amount, paymentId, paymentStatus);
 		this.issuerOrderId = issuerOrderId;
