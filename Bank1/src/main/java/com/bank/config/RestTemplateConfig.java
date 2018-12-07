@@ -23,12 +23,12 @@ public class RestTemplateConfig {
 	public RestTemplate restTemplate() {
 		try {
 			KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());//TODO: hide password
-		    keyStore.load(new FileInputStream(new File("keystore.p12")), "nikola94".toCharArray());
+		    keyStore.load(new FileInputStream(new File("Bank1.p12")), "bank1pass".toCharArray());
 	
 		    SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
 		            new SSLContextBuilder()
 		                    .loadTrustMaterial(null, new TrustSelfSignedStrategy())
-		                    .loadKeyMaterial(keyStore, "nikola94".toCharArray())
+		                    .loadKeyMaterial(keyStore, "bank1pass".toCharArray())
 		                    .build(),
 		            NoopHostnameVerifier.INSTANCE);
 	

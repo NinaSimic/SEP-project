@@ -15,6 +15,7 @@ import { BankService } from './service/bank.service';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InvalidLinkComponent } from './invalid-link/invalid-link.component';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { InvalidLinkComponent } from './invalid-link/invalid-link.component';
     AppRoutingModule,
     FormsModule,
     ModalModule.forRoot(),
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    MomentModule
   ],
   providers: [
     PaymentService,

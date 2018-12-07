@@ -101,7 +101,9 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public PaymentRequest checkUrl(String paymentLink, String merchantId, String merchandOrderId) {
 		PaymentRequest paymentRequest = paymentRequestRepository.getPaymentRequestByPaymentLinkContainingAndMerchantIdAndMerchantOrderId(paymentLink, merchantId, merchandOrderId);
+		System.out.println("url " + paymentRequest.getPaymentLink());
 		if(paymentRequest != null && paymentRequest.isActive()) {
+			System.out.println("dobar");
 			return paymentRequest;
 		}
 		return null;
@@ -167,6 +169,7 @@ public class PaymentServiceImpl implements PaymentService {
 				transaction.getValidityDate(), transaction.getAmount(), transaction.getId().toString(),
 				(new Date()).toString(), null, null, null, transaction.getPaymentId());
 
+		
 		InterBankTransaction returnInterBankTransaction = restTemplate.postForObject(uri.getPccUri() + "/transaction/request", interBankTransaction, InterBankTransaction.class);
 		if(returnInterBankTransaction.getPaymentStatus().equals(PaymentStatus.SUCCESS)) {
 			PaymentRequest paymentRequest = paymentRequestRepository.findOne(interBankTransaction.getPaymentId());

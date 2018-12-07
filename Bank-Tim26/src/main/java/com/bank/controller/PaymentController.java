@@ -18,7 +18,7 @@ import com.bank.model.Transaction;
 import com.bank.service.impl.PaymentServiceImpl;
 
 @RestController
-@CrossOrigin(origins = "https://localhost:4200")
+@CrossOrigin
 @RequestMapping("/api/payment")
 public class PaymentController {
 	
@@ -36,6 +36,7 @@ public class PaymentController {
 	@RequestMapping(method=RequestMethod.GET, path="/check/url", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public PaymentRequest checkUrl(@RequestParam("paymentUrl") String paymentUrl, @RequestParam("merchantId") String merchantId, @RequestParam("merchantOrderId") String merchantOrderId){
+		System.out.println("usao check");
 		return paymentServiceImpl.checkUrl(paymentUrl, merchantId, merchantOrderId);
 	}
 	
