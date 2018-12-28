@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.concentrator.model.Merchant;
+import com.concentrator.model.MerchantAllowedPayment;
 import com.concentrator.model.PaymentType;
 import com.concentrator.repository.MerchantAllowedPaymentRepository;
 import com.concentrator.repository.MerchantRepository;
@@ -51,8 +52,8 @@ public class MerchantServiceImpl implements MerchantService {
 	}
 
 	@Override
-	public ArrayList<PaymentType> findPaymentTypeByMerchantId(Merchant merchant) {
-		return merchantAllowedPaymentRepository.findPaymentTypeByMerchantId(merchant);
+	public ArrayList<MerchantAllowedPayment> findPaymentTypeByMerchant(Merchant merchant) {
+		return merchantAllowedPaymentRepository.findByMerchant(merchant);
 	}
 
 }

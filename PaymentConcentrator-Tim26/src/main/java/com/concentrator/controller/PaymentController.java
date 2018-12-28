@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.concentrator.model.Merchant;
+import com.concentrator.model.MerchantAllowedPayment;
 import com.concentrator.model.PaymentRequest;
 import com.concentrator.model.PaymentStatus;
 import com.concentrator.model.PaymentType;
@@ -56,15 +57,21 @@ public class PaymentController {
 		Merchant merchant = merchantService.findMerchantByMerchantId(paymentRequest.getMerchantId());
 		if (!check.equals("")) {
 			paymentRequest.setStatus(PaymentStatus.UNAUTHORIZED);
-			paymentRequest.setUrl(merchant.getErrorUrl());
+			//paymentRequest.setUrl(merchant.getErrorUrl());
 			paymentRequestRepository.save(paymentRequest);
 			return paymentRequest;
 		}
-		
-		ArrayList<PaymentType> allowedTypes = merchantService.findPaymentTypeByMerchantId(merchant);
-		if(!allowedTypes.contains(paymentRequest.getType())) {
+		ArrayList<PaymentType> types = new ArrayList<PaymentType>();
+		ArrayList<MerchantAllowedPayment> allowedTypes = merchantService.findPaymentTypeByMerchant(merchant);
+		for (MerchantAllowedPayment type : allowedTypes) {
+			types.add(type.getPaymentType());
+		}
+		System.out.println("type "+types.get(0));
+		System.out.println("tipovi" + PaymentType.valueOf(paymentRequest.getType().toString()));
+		System.out.println("tipovi "+types.get(1));
+		if(!types.contains(paymentRequest.getType())) {
 			paymentRequest.setStatus(PaymentStatus.TYPE_UNAVAILABLE);
-			paymentRequest.setUrl(merchant.getErrorUrl());
+			//.setUrl(merchant.getErrorUrl());
 			paymentRequestRepository.save(paymentRequest);
 			return paymentRequest;
 		}

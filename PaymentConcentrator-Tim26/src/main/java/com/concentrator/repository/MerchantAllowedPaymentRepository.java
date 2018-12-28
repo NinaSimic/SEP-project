@@ -14,7 +14,6 @@ import com.concentrator.model.PaymentType;
 @Repository
 public interface MerchantAllowedPaymentRepository extends JpaRepository<MerchantAllowedPayment, Long>{
 	
-	@Query("SELECT m.paymentType FROM MerchantAllowedPayment m WHERE m.merchant = :merchant")
-	public ArrayList<PaymentType> findPaymentTypeByMerchantId(Merchant merchant);
+	public ArrayList<MerchantAllowedPayment> findByMerchant(Merchant merchant);
 	
 }
